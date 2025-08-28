@@ -11,8 +11,12 @@ def add_extra_features(texts, X_tfidf):
     word_count = np.array([len(s.split()) for s in texts]).reshape(-1,1)
     char_count = np.array([len(s) for s in texts]).reshape(-1,1)
     avg_wordlen = (char_count / (word_count + 1)).reshape(-1,1)
-    extra_feats = scaler.transform(np.hstack([word_count, char_count, avg_wordlen]))
-    return hstack([X_tfidf, extra_feats])
+
+    # Manually normalize (simple version)
+    feats = np.hstack([word_count, char_count, avg_wordlen])
+    feats = (feats - feats.mean(axis=0)) / feats.std(axis=0)  # z-score scaling
+
+    return hstack([X_tfidf, feats])
 
 # Streamlit app
 st.title(" Resume Classification App (Random Forest)")
