@@ -8,9 +8,6 @@ st.set_page_config(page_title="Resume Classification App", layout="centered")
 
 st.title(" Resume Classification App (Decision Tree)")
 
-st.write("This app classifies resumes into one of four categories: "
-         "**Peoplesoft Resume, React Developer, SQL Developer, Workday**.")
-
 # Text input
 resume_text = st.text_area("Paste your resume text here:", height=200)
 
