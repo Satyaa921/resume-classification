@@ -1,22 +1,32 @@
 import streamlit as st
 import joblib
+import numpy as np
 
-# Load the saved pipeline (vectorizer + Decision Tree model)
-pipeline = joblib.load("decision_tree_pipeline.pkl")
+# Load the trained pipeline
+model = joblib.load("final_resume_model.pkl")
 
-# App title and description
-st.title("Resume Classification App (Decision Tree)")
-st.write("This app classifies resumes into categories using a Decision Tree model trained on resume text.")
+# App UI
+st.title(" Resume Classification App")
+st.write("This app classifies resumes into categories using a Random Forest pipeline trained on balanced data.")
 
-# Text area for user input
+# User input
 resume_text = st.text_area("Paste your resume text here:")
 
-# Predict button
 if st.button("Predict"):
-    if resume_text.strip() != "":
-        # Pipeline handles preprocessing + prediction
-        prediction = pipeline.predict([resume_text])[0]
-        
-        st.success(f"Predicted Category: **{prediction}**")
+    if resume_text.strip() == "":
+        st.warning(" Please enter some text before predicting.")
     else:
-        st.warning(" Please paste some text before predicting.")
+        # Get prediction
+        prediction = model.predict([resume_text])[0]
+
+        # Get prediction probabilities
+        probs = model.predict_proba([resume_text])[0]
+        class_labels = model.classes_
+
+        # Show main result
+        st.success(f" Predicted Category: **{prediction}**")
+
+        # Show probabilities per class
+        st.subheader("Prediction Probabilities:")
+        for label, p in zip(class_labels, probs):
+            st.write(f"- {label}: {p*100:.2f}%")
