@@ -7,7 +7,7 @@ model = joblib.load("final_resume_model.pkl")
 
 # App UI
 st.title(" Resume Classification App")
-st.write("This app classifies resumes into categories using a Random Forest pipeline trained on balanced data.")
+st.write("This app classifies resumes into categories.")
 
 # User input
 resume_text = st.text_area("Paste your resume text here:")
