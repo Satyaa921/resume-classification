@@ -3,7 +3,7 @@ import joblib
 import docx2txt
 
 # Load the trained Decision Tree pipeline
-model = joblib.load("final_resume_model.pkl")
+model = joblib.load("decision_tree_pipeline.pkl")
 
 st.set_page_config(page_title="Resume Classification App", layout="centered")
 
